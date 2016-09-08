@@ -47,15 +47,8 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
 	var App = __webpack_require__(172);
-	var marked = __webpack_require__(173);
-	var insertMarked = __webpack_require__(174);
 
-	// testing lexer and parser functions of marked
-	var tokens = marked.lexer("+ Blah + Blah");
-	console.log(marked.parser(tokens));
-	console.log(insertMarked("howdy"));
-
-	ReactDOM.render(React.createElement(App, { name: 'sammy', parsed: { tokens } }), document.getElementById('app'));
+	ReactDOM.render(React.createElement(App, { name: 'sammy' }), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -21433,26 +21426,22 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var Marked = __webpack_require__(173);
-	var insertMarked = __webpack_require__(174);
+	var insertMarked = __webpack_require__(173);
 
 	var App = React.createClass({
 		displayName: 'App',
 
-
 		getInitialState: function () {
 			return {
 				text: "",
-				markedText: ""
+				name: this.props.name
 			};
 		},
 
 		handleUserInput: function (e) {
 			var uInput = e.target.value;
-			// console.log(marked('I am using __markdown__.'));
 			this.setState({
-				text: e.target.value,
-				markedText: Marked(e.target.value)
+				text: e.target.value
 			});
 		},
 
@@ -21461,8 +21450,14 @@
 			return React.createElement(
 				'div',
 				null,
+				React.createElement(
+					'h1',
+					null,
+					' Greetings, ',
+					this.state.name
+				),
 				React.createElement('textarea', { onChange: this.handleUserInput, value: this.state.text }),
-				React.createElement('div', { dangerouslySetInnerHTML: insertMarked(this.state.markedText) })
+				React.createElement('div', { dangerouslySetInnerHTML: insertMarked(this.state.text) })
 			);
 		}
 	});
@@ -21471,6 +21466,20 @@
 
 /***/ },
 /* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var marked = __webpack_require__(174);
+
+	function insertMarked(st) {
+		return {
+			__html: marked(st)
+		};
+	}
+
+	module.exports = insertMarked;
+
+/***/ },
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -22761,20 +22770,6 @@
 	}());
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 174 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var marked = __webpack_require__(173);
-
-	function insertMarked(st) {
-		return {
-			__html: marked(st)
-		};
-	}
-
-	module.exports = insertMarked;
 
 /***/ }
 /******/ ]);

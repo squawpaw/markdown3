@@ -13,7 +13,12 @@ module.exports = {
 			test: /\.js$/,
 			exclude: /node_modules/,
 			loader: 'babel-loader'
-		}
+		},
+		// handle stylesheets required from node packages
+    	{ 
+    		test: /\.css$/, 
+    		loader: 'style-loader!css-loader'
+    	},
 		]
 	},
 	output: {
